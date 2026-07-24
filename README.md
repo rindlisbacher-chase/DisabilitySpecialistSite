@@ -1,0 +1,59 @@
+# Church Disability Specialist Resources
+
+Monorepo for a community hub that inspires, trains, and equips ward and stake Disability Specialists.
+
+> **Independent site:** Not officially provided, approved, or endorsed by Intellectual Reserve, Inc. or The Church of Jesus Christ of Latter-day Saints.
+
+## Architecture
+
+| Piece | Location | Host |
+|-------|----------|------|
+| React + TypeScript frontend | `apps/web` | Vercel |
+| PocketBase (SQLite + admin) | `apps/pocketbase` | Fly.io (recommended) |
+| Shared types | `packages/shared` | — |
+| Planning docs | `ai/roadmaps` | — |
+
+## Prerequisites
+
+- Node.js 20+ (22 recommended)
+- npm 10+
+- PocketBase binary for local backend (see `apps/pocketbase/README.md`)
+
+## Quick start (frontend mock)
+
+```bash
+npm install
+npm run dev
+```
+
+Open the URL Vite prints (usually http://localhost:5173).
+
+All MVP routes are available with seed resource data (no PocketBase required yet):
+
+- `/` Home  
+- `/getting-started`  
+- `/disabilities`  
+- `/resources` (+ detail pages)  
+- `/about` `/faq` `/contact`  
+
+## PocketBase (local)
+
+See [apps/pocketbase/README.md](apps/pocketbase/README.md). Phase 2 will wire the React app to the API via `VITE_POCKETBASE_URL`.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server for `apps/web` |
+| `npm run build` | Production build for `apps/web` |
+| `npm run preview` | Preview the production build |
+
+## Vercel
+
+- Set **Root Directory** to `apps/web`
+- Framework preset: Vite
+- SPA rewrites are in `apps/web/vercel.json`
+
+## Roadmap
+
+See [ai/roadmaps/church-disability-specialist-resources-roadmap.md](ai/roadmaps/church-disability-specialist-resources-roadmap.md).

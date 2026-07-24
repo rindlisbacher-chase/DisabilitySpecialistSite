@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Builds
+dist/
+build/
+*.local
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs / coverage
+logs/
+*.log
+npm-debug.log*
+coverage/
+
+# PocketBase runtime data (never commit)
+apps/pocketbase/pb_data/
+apps/pocketbase/pocketbase
+apps/pocketbase/pocketbase.exe
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
