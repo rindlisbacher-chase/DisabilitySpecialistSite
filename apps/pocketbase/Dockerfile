@@ -2,7 +2,7 @@
 
 FROM alpine:3.21
 
-ARG PB_VERSION=0.29.0
+ARG PB_VERSION=0.39.9
 
 RUN apk add --no-cache ca-certificates unzip curl \
   && curl -fsSL -o /tmp/pb.zip \

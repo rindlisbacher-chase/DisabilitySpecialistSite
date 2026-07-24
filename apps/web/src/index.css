@@ -238,6 +238,10 @@ textarea {
   max-width: 52rem;
 }
 
+.disclaimer p + p {
+  margin-top: 0.75rem;
+}
+
 .page-intro {
   margin-bottom: var(--space-6);
   max-width: 42rem;

@@ -31,6 +31,9 @@ coverage/
 apps/pocketbase/pb_data/
 apps/pocketbase/pocketbase
 apps/pocketbase/pocketbase.exe
+apps/pocketbase/CHANGELOG.md
+apps/pocketbase/LICENSE.md
+apps/pocketbase/*.zip
 
 # Vercel
 .vercel

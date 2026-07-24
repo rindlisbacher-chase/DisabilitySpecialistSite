@@ -8,6 +8,8 @@
   ],
   "scripts": {
     "dev": "npm run dev -w web",
+    "dev:web": "npm run dev -w web",
+    "dev:pb": "apps\\pocketbase\\serve.bat",
     "build": "npm run build -w web",
     "preview": "npm run preview -w web",
     "lint": "npm run lint -w web"

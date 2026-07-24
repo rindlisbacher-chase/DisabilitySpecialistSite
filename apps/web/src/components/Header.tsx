@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 
 const links = [
   { to: '/', label: 'Home', end: true },
+  { to: '/about', label: 'About' },
   { to: '/getting-started', label: 'Getting Started' },
   { to: '/disabilities', label: 'Disabilities' },
   { to: '/resources', label: 'Resources' },
-  { to: '/about', label: 'About' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
 ]

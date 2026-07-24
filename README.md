@@ -36,15 +36,26 @@ All MVP routes are available with seed resource data (no PocketBase required yet
 - `/resources` (+ detail pages)  
 - `/about` `/faq` `/contact`  
 
-## PocketBase (local)
+## PocketBase (local SQLite)
 
-See [apps/pocketbase/README.md](apps/pocketbase/README.md). Phase 2 will wire the React app to the API via `VITE_POCKETBASE_URL`.
+PocketBase uses SQLite automatically (`apps/pocketbase/pb_data/data.db`).
+
+```bash
+npm run dev:pb
+```
+
+- Admin UI: http://127.0.0.1:8090/_/
+- Default local admin: `dev@localhost.local` / `LocalDevPass123!` (change after first login)
+- Frontend env: `apps/web/.env` → `VITE_POCKETBASE_URL=http://127.0.0.1:8090`
+
+See [apps/pocketbase/README.md](apps/pocketbase/README.md) for migrations and Fly deploy.
 
 ## Scripts
 
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start Vite dev server for `apps/web` |
+| `npm run dev:pb` | Start local PocketBase (SQLite) on :8090 |
 | `npm run build` | Production build for `apps/web` |
 | `npm run preview` | Preview the production build |
 
