@@ -37,3 +37,7 @@ apps/pocketbase/pocketbase.exe
 
 # TypeScript
 *.tsbuildinfo
+
+# Local Context and Planning docs
+ai/roadmaps
+context

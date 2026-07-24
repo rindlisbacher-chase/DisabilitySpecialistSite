@@ -1,0 +1,25 @@
+# fly.toml — deploy later with: fly launch / fly deploy from this directory
+# Recommended: attach a persistent volume mounted at /pb/pb_data
+
+app = "cds-pocketbase"
+primary_region = "slc"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8090
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Uncomment after creating a volume:
+# [[mounts]]
+#   source = "pb_data"
+#   destination = "/pb/pb_data"
