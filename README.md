@@ -62,8 +62,9 @@ See [apps/pocketbase/README.md](apps/pocketbase/README.md) for migrations and Fl
 ## Vercel
 
 - Set **Root Directory** to `apps/web`
+- Enable **Include source files outside of the Root Directory in the Build Step** (needed for `packages/shared` and the root lockfile)
 - Framework preset: Vite
-- SPA rewrites are in `apps/web/vercel.json`
+- Install/build commands and SPA rewrites are in `apps/web/vercel.json` (they run from the monorepo root so workspaces resolve)
 
 ## Roadmap
 
