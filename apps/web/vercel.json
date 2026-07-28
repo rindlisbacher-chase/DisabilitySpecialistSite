@@ -1,5 +1,5 @@
 {
-  "installCommand": "cd ../.. && npm install",
+  "installCommand": "cd ../.. && npm install && npm install -w web @rolldown/binding-linux-x64-gnu --no-save",
   "buildCommand": "cd ../.. && npm run build -w web",
   "outputDirectory": "dist",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
