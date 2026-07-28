@@ -126,6 +126,49 @@ export function ResourcesPage() {
           ))}
         </div>
       )}
+
+      <aside className="official-callouts" aria-label="Official Church disability resources">
+        <div className="official-callouts__images">
+          <a
+            className="official-callout__link"
+            href="https://disability.ChurchofJesusChrist.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="/images/resources/church-disability-resources.jpeg"
+              alt="Disability resources available at disability.ChurchofJesusChrist.org"
+              width={600}
+              height={600}
+            />
+          </a>
+          <a
+            className="official-callout__link"
+            href="https://disability.ChurchofJesusChrist.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="/images/resources/church-disability-resources-scriptures.jpeg"
+              alt="Scripture-focused disability resources at disability.ChurchofJesusChrist.org"
+              width={600}
+              height={600}
+            />
+          </a>
+        </div>
+        <p>
+          For official Church disability resources, visit{' '}
+          <a
+            href="https://disability.ChurchofJesusChrist.org"
+            target="_blank"
+            rel="noreferrer"
+          >
+            disability.ChurchofJesusChrist.org
+          </a>
+          . Linking there does not mean the Church endorses this independent
+          site.
+        </p>
+      </aside>
     </article>
   )
 }

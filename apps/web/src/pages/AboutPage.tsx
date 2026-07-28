@@ -5,6 +5,15 @@ export function AboutPage() {
         <h1>About us</h1>
       </div>
 
+      <figure className="page-photo">
+        <img
+          src="/images/about/ward-party.jpeg"
+          alt="A community gathering where adults and children visit together"
+          width={1200}
+          height={800}
+        />
+      </figure>
+
       <p>
         This website is dedicated to the many individuals who have entered the
         challenging yet deeply rewarding work of disability service. It may be
@@ -42,6 +51,15 @@ export function AboutPage() {
         that they truly belong, have meaningful opportunities to contribute, and
         can progress as beloved sons and daughters of God.
       </p>
+
+      <figure className="page-photo page-photo--narrow">
+        <img
+          src="/images/about/christ-with-children.jpeg"
+          alt="Artistic depiction of Christ welcoming children"
+          width={1000}
+          height={700}
+        />
+      </figure>
 
       <h2>Independence</h2>
       <p>

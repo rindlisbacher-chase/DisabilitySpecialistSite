@@ -9,32 +9,44 @@ export function ContactPage() {
         </p>
       </div>
 
-      <div className="contact-panel">
-        <p>
-          Contact details are placeholders until the stakeholder team confirms
-          the public inbox and phone numbers.
-        </p>
+      <div className="contact-layout">
+        <div className="contact-panel">
+          <p>
+            Contact details are placeholders until the stakeholder team confirms
+            the public inbox and phone numbers.
+          </p>
 
-        <dl>
-          <div>
-            <dt>Email (placeholder)</dt>
-            <dd>hello@example.com</dd>
-          </div>
-          <div>
-            <dt>What to include</dt>
-            <dd>
-              Your unit (optional), what you are looking for, and whether you are
-              suggesting a resource to share with others.
-            </dd>
-          </div>
-          <div>
-            <dt>Official Church disability support</dt>
-            <dd>
-              For official Church channels, see disability specialist resources
-              on ChurchofJesusChrist.org. This site remains independent.
-            </dd>
-          </div>
-        </dl>
+          <dl>
+            <div>
+              <dt>Email (placeholder)</dt>
+              <dd>hello@example.com</dd>
+            </div>
+            <div>
+              <dt>What to include</dt>
+              <dd>
+                Your unit (optional), what you are looking for, and whether you
+                are suggesting a resource to share with others.
+              </dd>
+            </div>
+            <div>
+              <dt>Official Church disability support</dt>
+              <dd>
+                For official Church channels, see disability specialist resources
+                on ChurchofJesusChrist.org. This site remains independent.
+              </dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure className="contact-portrait">
+          <img
+            src="/images/contact/pheobe-and-udell.jpg"
+            alt="Phoebe and Udell, community contacts for this site"
+            width={180}
+            height={180}
+          />
+          <figcaption>Phoebe &amp; Udell</figcaption>
+        </figure>
       </div>
     </article>
   )

@@ -9,6 +9,15 @@ export function GettingStartedPage() {
         </p>
       </div>
 
+      <figure className="page-photo">
+        <img
+          src="/images/getting-started/sunday-school.jpeg"
+          alt="Members gathered together for a Sunday class"
+          width={1200}
+          height={800}
+        />
+      </figure>
+
       <div className="steps" aria-label="Getting started steps">
         <div className="step">
           <div>
