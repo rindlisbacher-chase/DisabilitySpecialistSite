@@ -47,9 +47,10 @@ export function AboutPage() {
 
       <p>
         By learning from one another and adapting ideas to local circumstances,
-        we can help more individuals with disabilities and their families feel
-        that they truly belong, have meaningful opportunities to contribute, and
-        can progress as beloved sons and daughters of God.
+        we can help more individuals with disabilities—whether visible or
+        invisible—and their families feel that they truly belong, have meaningful
+        opportunities to contribute, and can progress as beloved sons and
+        daughters of God.
       </p>
 
       <figure className="page-photo page-photo--narrow">

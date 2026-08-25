@@ -5,7 +5,8 @@ export function GettingStartedPage() {
         <h1>Getting started as a Disability Specialist</h1>
         <p className="lede">
           You do not need to be an expert. Grow in the calling through study,
-          prayer, and loving relationships—one person and family at a time.
+          prayer, and loving relationships—one person and family at a time,
+          including those whose disabilities may not be visible.
         </p>
       </div>
 
@@ -42,7 +43,8 @@ export function GettingStartedPage() {
             <h2>Meet individuals and families</h2>
             <p>
               Listen first. Questions like “What is it like being you?” and “What
-              is your experience at church like?” open the door to real needs.
+              is your experience at church like?” open the door to real needs—
+              including needs that are not obvious from the outside.
             </p>
           </div>
         </div>
@@ -65,6 +67,15 @@ export function GettingStartedPage() {
           </div>
         </div>
       </div>
+
+      <figure className="page-photo page-photo--narrow">
+        <img
+          src="/images/getting-started/scripture-study.jpg"
+          alt="Friends reading scriptures side by side"
+          width={800}
+          height={533}
+        />
+      </figure>
 
       <section className="section prose">
         <h2>Helpful official references</h2>

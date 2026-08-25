@@ -7,7 +7,12 @@ const faqs = [
   {
     question: 'Who can use these resources?',
     answer:
-      'Ward and stake Disability Specialists, leaders, and others who want to learn how to support individuals with disabilities. Adapt materials carefully and seek local leader approval.',
+      'Ward and stake Disability Specialists, leaders, families, and others who want to help every person belong. Adapt materials carefully and seek local leader approval.',
+  },
+  {
+    question: 'Are all disabilities visible?',
+    answer:
+      'No. Many disabilities are invisible—including some related to mental health, chronic illness, learning, memory, and more. Looking only for what you can see means missing people who still need support and belonging.',
   },
   {
     question: 'Do I need to be an expert to serve?',

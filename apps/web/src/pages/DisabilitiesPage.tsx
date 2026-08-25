@@ -62,6 +62,22 @@ export function DisabilitiesPage() {
         </p>
       </div>
 
+      <figure className="page-photo">
+        <img
+          src="/images/disabilities/scripture-study.jpg"
+          alt="Ward members studying scriptures together at a table"
+          width={1200}
+          height={800}
+        />
+      </figure>
+
+      <p className="inclusion-callout">
+        Many disabilities are invisible. Someone may look like any other member
+        in the room and still need understanding, flexibility, or support.
+        Looking only for what you can see means missing people the Lord already
+        knows.
+      </p>
+
       <div className="topic-list">
         {topics.map((topic) => (
           <section key={topic.title} className="topic-item">

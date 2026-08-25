@@ -20,6 +20,7 @@ Thumbs.db
 .idea/
 .vscode/*
 !.vscode/extensions.json
+.cursor
 
 # Logs / coverage
 logs/
@@ -44,3 +45,7 @@ apps/pocketbase/*.zip
 # Local Context and Planning docs
 ai/roadmaps
 context
+
+# Local AI upscale tooling / scratch (large binaries + PNG intermediates)
+tools/realesrgan/
+apps/web/public/images/_upscale_work/
