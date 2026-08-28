@@ -1,3 +1,12 @@
+import { CaptionedPhoto } from '../components/CaptionedPhoto'
+import { InsightGrid } from '../components/InsightGrid'
+import { insights } from '../data/insights'
+
+const hiddenMessage = insights.find((item) => item.id === 'hidden-message-1')!
+const introvertInsights = insights.filter(
+  (item) => item.id === 'introverts-hiding' || item.id === 'introverts-speaking',
+)
+
 export function GettingStartedPage() {
   return (
     <article>
@@ -10,14 +19,13 @@ export function GettingStartedPage() {
         </p>
       </div>
 
-      <figure className="page-photo">
-        <img
-          src="/images/getting-started/sunday-school.jpeg"
-          alt="Members gathered together for a Sunday class"
-          width={1200}
-          height={800}
-        />
-      </figure>
+      <CaptionedPhoto
+        src={hiddenMessage.src}
+        alt={hiddenMessage.alt}
+        caption={hiddenMessage.caption}
+        width={hiddenMessage.width}
+        height={hiddenMessage.height}
+      />
 
       <div className="steps" aria-label="Getting started steps">
         <div className="step">
@@ -68,14 +76,11 @@ export function GettingStartedPage() {
         </div>
       </div>
 
-      <figure className="page-photo page-photo--narrow">
-        <img
-          src="/images/getting-started/scripture-study.jpg"
-          alt="Friends reading scriptures side by side"
-          width={800}
-          height={533}
-        />
-      </figure>
+      <InsightGrid
+        heading="Look beyond what is obvious"
+        lead="Some needs show up quietly. These reminders can help you listen with greater empathy as you begin serving."
+        items={introvertInsights}
+      />
 
       <section className="section prose">
         <h2>Helpful official references</h2>

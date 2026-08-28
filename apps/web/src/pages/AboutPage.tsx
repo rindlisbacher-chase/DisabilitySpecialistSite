@@ -1,3 +1,9 @@
+import { BlockQuote } from '../components/BlockQuote'
+import { CaptionedPhoto } from '../components/CaptionedPhoto'
+import { hollandQuote, insights } from '../data/insights'
+
+const whichHasDisability = insights.find((item) => item.id === 'which-has-disability')!
+
 export function AboutPage() {
   return (
     <article className="prose">
@@ -5,14 +11,13 @@ export function AboutPage() {
         <h1>About us</h1>
       </div>
 
-      <figure className="page-photo">
-        <img
-          src="/images/about/ward-party.jpeg"
-          alt="A community gathering where adults and children visit together"
-          width={1200}
-          height={800}
-        />
-      </figure>
+      <CaptionedPhoto
+        src={whichHasDisability.src}
+        alt={whichHasDisability.alt}
+        caption={whichHasDisability.caption}
+        width={whichHasDisability.width}
+        height={whichHasDisability.height}
+      />
 
       <p>
         This website is dedicated to the many individuals who have entered the
@@ -59,6 +64,7 @@ export function AboutPage() {
           alt="Artistic depiction of Christ welcoming children"
           width={1000}
           height={700}
+          loading="lazy"
         />
       </figure>
 

@@ -1,4 +1,10 @@
 import { Link } from 'react-router-dom'
+import { BlockQuote } from '../components/BlockQuote'
+import { CaptionedPhoto } from '../components/CaptionedPhoto'
+import { hollandQuote, insights } from '../data/insights'
+
+const socialAnxiety = insights.find((item) => item.id === 'social-anxiety')!
+const whichHasDisability = insights.find((item) => item.id === 'which-has-disability')!
 
 export function HomePage() {
   return (
@@ -6,10 +12,10 @@ export function HomePage() {
       <section className="hero hero--photo" aria-labelledby="hero-brand">
         <div className="hero__media" aria-hidden="true">
           <img
-            src="/images/home/ward-party.jpeg"
+            src="/images/home/look-beyond-the-physical.jpg"
             alt=""
-            width={1200}
-            height={800}
+            width={738}
+            height={391}
           />
         </div>
         <div className="hero__copy">
@@ -35,6 +41,11 @@ export function HomePage() {
         </div>
       </section>
 
+      <BlockQuote
+        quote={hollandQuote.text}
+        attribution={hollandQuote.attribution}
+      />
+
       <section className="section section--split" aria-labelledby="home-purpose">
         <div>
           <h2 id="home-purpose">Built for your calling</h2>
@@ -54,14 +65,14 @@ export function HomePage() {
             </Link>
           </div>
         </div>
-        <figure className="section-photo">
-          <img
-            src="/images/home/inclusion.jpeg"
-            alt="People of different ages gathering together in a welcoming church setting"
-            width={640}
-            height={427}
-          />
-        </figure>
+        <CaptionedPhoto
+          src={socialAnxiety.src}
+          alt={socialAnxiety.alt}
+          caption={socialAnxiety.caption}
+          width={socialAnxiety.width}
+          height={socialAnxiety.height}
+          variant="section"
+        />
       </section>
 
       <section
@@ -77,14 +88,14 @@ export function HomePage() {
             all welcome here.
           </p>
         </div>
-        <figure className="section-photo">
-          <img
-            src="/images/home/visiting-the-elderly.png"
-            alt="A specialist greeting an older ward member during a home visit"
-            width={640}
-            height={414}
-          />
-        </figure>
+        <CaptionedPhoto
+          src={whichHasDisability.src}
+          alt={whichHasDisability.alt}
+          caption={whichHasDisability.caption}
+          width={whichHasDisability.width}
+          height={whichHasDisability.height}
+          variant="section"
+        />
       </section>
     </>
   )

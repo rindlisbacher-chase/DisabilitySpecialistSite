@@ -1,3 +1,16 @@
+import { CaptionedPhoto } from '../components/CaptionedPhoto'
+import { InsightGrid } from '../components/InsightGrid'
+import { insights } from '../data/insights'
+
+const neurodiversity = insights.find((item) => item.id === 'neurodiversity')!
+const galleryInsights = insights.filter(
+  (item) =>
+    item.id === 'sensory-1' ||
+    item.id === 'sensory-2' ||
+    item.id === 'hidden-message-1' ||
+    item.id === 'hidden-message-2',
+)
+
 const topics = [
   {
     title: 'Autism',
@@ -62,14 +75,13 @@ export function DisabilitiesPage() {
         </p>
       </div>
 
-      <figure className="page-photo">
-        <img
-          src="/images/disabilities/scripture-study.jpg"
-          alt="Ward members studying scriptures together at a table"
-          width={1200}
-          height={800}
-        />
-      </figure>
+      <CaptionedPhoto
+        src={neurodiversity.src}
+        alt={neurodiversity.alt}
+        caption={neurodiversity.caption}
+        width={neurodiversity.width}
+        height={neurodiversity.height}
+      />
 
       <p className="inclusion-callout">
         Many disabilities are invisible. Someone may look like any other member
@@ -77,6 +89,12 @@ export function DisabilitiesPage() {
         Looking only for what you can see means missing people the Lord already
         knows.
       </p>
+
+      <InsightGrid
+        heading="What you may not see at first"
+        lead="These images and reminders highlight experiences that are easy to overlook—especially when disability does not look the way we expect."
+        items={galleryInsights}
+      />
 
       <div className="topic-list">
         {topics.map((topic) => (
