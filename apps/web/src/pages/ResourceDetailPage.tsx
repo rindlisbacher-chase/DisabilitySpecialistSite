@@ -1,27 +1,44 @@
 import { Link, useParams } from 'react-router-dom'
+import { RESOURCE_TYPE_LABELS } from '@cds/shared'
+import { useResource } from '../hooks/useResources'
 import {
-  AUDIENCE_LABELS,
-  RESOURCE_TYPE_LABELS,
-  SETTING_LABELS,
-  TOPIC_LABELS,
-} from '@cds/shared'
-import { seedResources } from '../data/resources'
+  formatResourceDate,
+  getYouTubeEmbedUrl,
+  isPdfUrl,
+  resourceActionLabel,
+} from '../lib/resourceLinks'
 
 export function ResourceDetailPage() {
   const { id } = useParams()
-  const resource = seedResources.find((item) => item.id === id)
+  const { data: resource, loading, error } = useResource(id)
+
+  if (loading) {
+    return (
+      <article className="page-intro">
+        <p className="lede" role="status">
+          Loading resource…
+        </p>
+      </article>
+    )
+  }
 
   if (!resource) {
     return (
       <article className="page-intro">
         <h1>Resource not found</h1>
-        <p className="lede">That resource is not in the sample library.</p>
+        <p className="lede">
+          {error ?? 'That resource is not in the library.'}
+        </p>
         <Link className="btn btn--secondary" to="/resources">
           Back to resources
         </Link>
       </article>
     )
   }
+
+  const youtubeEmbed = resource.link ? getYouTubeEmbedUrl(resource.link) : null
+  const showPdfPreview =
+    resource.link && resource.type === 'printable' && isPdfUrl(resource.link)
 
   return (
     <article className="prose">
@@ -31,58 +48,93 @@ export function ResourceDetailPage() {
       <div className="page-intro">
         <div className="resource-card__meta" style={{ marginBottom: '1rem' }}>
           <span className="chip">{RESOURCE_TYPE_LABELS[resource.type]}</span>
-          {resource.settings.map((setting) => (
-            <span key={setting} className="chip chip--warm">
-              {SETTING_LABELS[setting]}
+          {resource.disabilities.map((disability) => (
+            <span key={disability.id} className="chip chip--warm">
+              {disability.name}
             </span>
           ))}
         </div>
-        <h1>{resource.title}</h1>
+        <h1>{resource.name}</h1>
         <p className="lede">{resource.summary}</p>
       </div>
-
-      {resource.body ? <p>{resource.body}</p> : null}
 
       <h2>Details</h2>
       <ul>
         <li>
-          <strong>Topics:</strong>{' '}
-          {resource.topics.map((topic) => TOPIC_LABELS[topic]).join(', ')}
+          <strong>Disabilities:</strong>{' '}
+          {resource.disabilities.length > 0
+            ? resource.disabilities.map((d) => d.name).join(', ')
+            : 'General'}
         </li>
         <li>
           <strong>Audience:</strong>{' '}
-          {resource.audiences
-            .map((audience) => AUDIENCE_LABELS[audience])
-            .join(', ')}
+          {resource.audiences.length > 0
+            ? resource.audiences
+                .map((audience) =>
+                  audience.description
+                    ? `${audience.name} (${audience.description})`
+                    : audience.name,
+                )
+                .join(', ')
+            : 'All'}
         </li>
-        {resource.contributorCredit ? (
+        {resource.author ? (
           <li>
-            <strong>Credit:</strong> {resource.contributorCredit}
+            <strong>Author:</strong> {resource.author}
           </li>
         ) : null}
-        <li>
-          <strong>Updated:</strong>{' '}
-          {new Date(resource.updatedAt).toLocaleDateString()}
-        </li>
+        {formatResourceDate(resource.updatedAt) ? (
+          <li>
+            <strong>Updated:</strong> {formatResourceDate(resource.updatedAt)}
+          </li>
+        ) : null}
       </ul>
 
-      {resource.externalUrl ? (
-        <p>
-          <a
-            className="btn btn--primary"
-            href={resource.externalUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open linked resource
-          </a>
-        </p>
+      {resource.link ? (
+        <>
+          <p>
+            <a
+              className="btn btn--primary"
+              href={resource.link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {resourceActionLabel(resource.type)}
+            </a>
+          </p>
+
+          {youtubeEmbed ? (
+            <div className="resource-embed">
+              <iframe
+                title={`Video: ${resource.name}`}
+                src={youtubeEmbed}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          ) : null}
+
+          {showPdfPreview ? (
+            <div className="resource-embed">
+              <iframe
+                title={`Preview: ${resource.name}`}
+                src={resource.link}
+              />
+            </div>
+          ) : null}
+        </>
       ) : (
         <p className="section__lead">
-          File downloads will connect here once PocketBase file storage is
-          wired up.
+          A download link will appear here once an admin adds one in PocketBase.
         </p>
       )}
+
+      {resource.type === 'video' && resource.link && !youtubeEmbed ? (
+        <p className="section__lead">
+          This video is hosted externally. Use the button above to open it in a
+          new tab.
+        </p>
+      ) : null}
 
       <p>
         You may adapt ideas that inspire your calling. Please seek approval from

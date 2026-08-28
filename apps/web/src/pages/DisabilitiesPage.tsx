@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom'
 import { CaptionedPhoto } from '../components/CaptionedPhoto'
 import { InsightGrid } from '../components/InsightGrid'
 import { insights } from '../data/insights'
+import { useDisabilities } from '../hooks/useResources'
 
 const neurodiversity = insights.find((item) => item.id === 'neurodiversity')!
 const galleryInsights = insights.filter(
@@ -11,60 +13,9 @@ const galleryInsights = insights.filter(
     item.id === 'hidden-message-2',
 )
 
-const topics = [
-  {
-    title: 'Autism',
-    summary:
-      'May affect language, behavior, social skills, and communication. Support often includes predictability, sensory awareness, and caregiver partnership.',
-  },
-  {
-    title: 'Chronic illness / medical disabilities',
-    summary:
-      'May affect health, energy, and quality of life. Flexibility, ministering, and caregiver support matter.',
-  },
-  {
-    title: 'Hearing loss & deafness',
-    summary:
-      'Affects hearing and verbal communication. Consider seating, microphones, interpreters, and other access tools.',
-  },
-  {
-    title: 'Intellectual disability',
-    summary:
-      'May affect learning, thinking, problem solving, and self-care. Focus on belonging, clear communication, and meaningful participation.',
-  },
-  {
-    title: 'Learning disability',
-    summary:
-      'Affects learning by traditional methods alone (for example ADHD or dyslexia). Offer multiple ways to receive and share information.',
-  },
-  {
-    title: 'Memory loss',
-    summary:
-      'Affects short- and/or long-term memory. Patience, familiar routines, and caregiver support help.',
-  },
-  {
-    title: 'Mental health / mental illness',
-    summary:
-      'Can affect thoughts, emotions, and behavior. Respond with compassion, confidentiality, and appropriate referrals.',
-  },
-  {
-    title: 'Physical disability',
-    summary:
-      'May affect mobility and self-care. Check building access, seating, and how callings and activities can include everyone.',
-  },
-  {
-    title: 'Speech & language disorder',
-    summary:
-      'Affects communication. Allow time, alternative formats, and respectful listening.',
-  },
-  {
-    title: 'Vision loss & blindness',
-    summary:
-      'Affects sight and visual communication. Offer large print, high contrast, verbal cues, and accessible digital formats.',
-  },
-]
-
 export function DisabilitiesPage() {
+  const { data: disabilities, loading, error, source } = useDisabilities()
+
   return (
     <article>
       <div className="page-intro">
@@ -96,13 +47,36 @@ export function DisabilitiesPage() {
         items={galleryInsights}
       />
 
+      {error ? (
+        <p className="section__lead" role="status">
+          {error}
+        </p>
+      ) : null}
+
+      {source === 'seed' ? (
+        <p className="section__lead" role="status">
+          Showing sample disability topics. Start PocketBase for the full list.
+        </p>
+      ) : null}
+
       <div className="topic-list">
-        {topics.map((topic) => (
-          <section key={topic.title} className="topic-item">
-            <h2>{topic.title}</h2>
-            <p>{topic.summary}</p>
-          </section>
-        ))}
+        {loading ? (
+          <p className="section__lead" role="status">
+            Loading disability topics…
+          </p>
+        ) : (
+          disabilities.map((disability) => (
+            <section key={disability.id} className="topic-item">
+              <h2>{disability.name}</h2>
+              <p>{disability.description}</p>
+              <p>
+                <Link to={`/resources?disability=${disability.id}`}>
+                  Browse resources for {disability.name}
+                </Link>
+              </p>
+            </section>
+          ))
+        )}
       </div>
 
       <p className="section__lead" style={{ marginTop: '2rem' }}>

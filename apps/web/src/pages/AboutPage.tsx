@@ -1,6 +1,6 @@
-import { BlockQuote } from '../components/BlockQuote'
+
 import { CaptionedPhoto } from '../components/CaptionedPhoto'
-import { hollandQuote, insights } from '../data/insights'
+import { insights } from '../data/insights'
 
 const whichHasDisability = insights.find((item) => item.id === 'which-has-disability')!
 

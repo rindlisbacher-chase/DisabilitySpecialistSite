@@ -1,49 +1,55 @@
 import { useMemo, useState } from 'react'
-import {
-  RESOURCE_TYPE_LABELS,
-  SETTING_LABELS,
-  TOPIC_LABELS,
-  type DisabilityTopic,
-  type ResourceSetting,
-  type ResourceType,
-} from '@cds/shared'
+import { useSearchParams } from 'react-router-dom'
+import { RESOURCE_TYPE_LABELS, type ResourceType } from '@cds/shared'
 import { ResourceCard } from '../components/ResourceCard'
-import { seedResources } from '../data/resources'
+import { useResources, useTaxonomy } from '../hooks/useResources'
 
-const allSettings = Object.keys(SETTING_LABELS) as ResourceSetting[]
 const allTypes = Object.keys(RESOURCE_TYPE_LABELS) as ResourceType[]
-const allTopics = Object.keys(TOPIC_LABELS) as DisabilityTopic[]
 
 export function ResourcesPage() {
-  const [query, setQuery] = useState('')
-  const [setting, setSetting] = useState<ResourceSetting | 'all'>('all')
-  const [type, setType] = useState<ResourceType | 'all'>('all')
-  const [topic, setTopic] = useState<DisabilityTopic | 'all'>('all')
+  const [searchParams] = useSearchParams()
+  const initialDisability = searchParams.get('disability') ?? 'all'
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    return seedResources.filter((resource) => {
-      if (resource.status !== 'published') return false
-      if (setting !== 'all' && !resource.settings.includes(setting)) return false
-      if (type !== 'all' && resource.type !== type) return false
-      if (topic !== 'all' && !resource.topics.includes(topic)) return false
-      if (!q) return true
-      return (
-        resource.title.toLowerCase().includes(q) ||
-        resource.summary.toLowerCase().includes(q)
-      )
-    })
-  }, [query, setting, type, topic])
+  const [query, setQuery] = useState('')
+  const [type, setType] = useState<ResourceType | 'all'>('all')
+  const [disabilityId, setDisabilityId] = useState(initialDisability)
+  const [audienceId, setAudienceId] = useState('all')
+
+  const { data: taxonomy, loading: taxonomyLoading } = useTaxonomy()
+
+  const filters = useMemo(
+    () => ({
+      search: query,
+      type: type === 'all' ? undefined : type,
+      disabilityId: disabilityId === 'all' ? undefined : disabilityId,
+      audienceId: audienceId === 'all' ? undefined : audienceId,
+    }),
+    [query, type, disabilityId, audienceId],
+  )
+
+  const { data: resources, loading, error, source } = useResources(filters)
 
   return (
     <article>
       <div className="page-intro">
         <h1>Resources</h1>
         <p className="lede">
-          Browse community-shared how-tos, ideas, and presentations. Adapt what
-          inspires you—and seek local leader approval when you do.
+          Browse community-shared printables, presentations, talks, and videos.
+          Adapt what inspires you—and seek local leader approval when you do.
         </p>
       </div>
+
+      {error ? (
+        <p className="section__lead" role="status">
+          {error}
+        </p>
+      ) : null}
+
+      {source === 'seed' ? (
+        <p className="section__lead" role="status">
+          Showing sample data. Start PocketBase locally to manage live resources.
+        </p>
+      ) : null}
 
       <div className="resource-filters">
         <div className="field" style={{ flex: '1 1 100%' }}>
@@ -51,31 +57,13 @@ export function ResourcesPage() {
           <input
             id="resource-search"
             type="search"
-            placeholder="Search titles and summaries"
+            placeholder="Search names, summaries, or authors"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
           />
         </div>
 
         <div className="resource-filters__row">
-          <div className="field">
-            <label htmlFor="filter-setting">Setting</label>
-            <select
-              id="filter-setting"
-              value={setting}
-              onChange={(event) =>
-                setSetting(event.target.value as ResourceSetting | 'all')
-              }
-            >
-              <option value="all">All settings</option>
-              {allSettings.map((value) => (
-                <option key={value} value={value}>
-                  {SETTING_LABELS[value]}
-                </option>
-              ))}
-            </select>
-          </div>
-
           <div className="field">
             <label htmlFor="filter-type">Type</label>
             <select
@@ -95,18 +83,35 @@ export function ResourcesPage() {
           </div>
 
           <div className="field">
-            <label htmlFor="filter-topic">Topic</label>
+            <label htmlFor="filter-disability">Disability</label>
             <select
-              id="filter-topic"
-              value={topic}
-              onChange={(event) =>
-                setTopic(event.target.value as DisabilityTopic | 'all')
-              }
+              id="filter-disability"
+              value={disabilityId}
+              onChange={(event) => setDisabilityId(event.target.value)}
+              disabled={taxonomyLoading}
             >
-              <option value="all">All topics</option>
-              {allTopics.map((value) => (
-                <option key={value} value={value}>
-                  {TOPIC_LABELS[value]}
+              <option value="all">All disabilities</option>
+              {taxonomy.disabilities.map((disability) => (
+                <option key={disability.id} value={disability.id}>
+                  {disability.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="field">
+            <label htmlFor="filter-audience">Audience</label>
+            <select
+              id="filter-audience"
+              value={audienceId}
+              onChange={(event) => setAudienceId(event.target.value)}
+              disabled={taxonomyLoading}
+            >
+              <option value="all">All audiences</option>
+              {taxonomy.audiences.map((audience) => (
+                <option key={audience.id} value={audience.id}>
+                  {audience.name}
+                  {audience.description ? ` (${audience.description})` : ''}
                 </option>
               ))}
             </select>
@@ -114,14 +119,18 @@ export function ResourcesPage() {
         </div>
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="empty-state" role="status">
+          Loading resources…
+        </div>
+      ) : resources.length === 0 ? (
         <div className="empty-state" role="status">
           No resources match those filters yet. Try clearing search or choosing
           “All.”
         </div>
       ) : (
         <div className="resource-grid">
-          {filtered.map((resource) => (
+          {resources.map((resource) => (
             <ResourceCard key={resource.id} resource={resource} />
           ))}
         </div>

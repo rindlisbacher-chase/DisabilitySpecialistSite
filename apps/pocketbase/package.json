@@ -1,0 +1,11 @@
+{
+  "name": "pocketbase-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "import:resources": "node scripts/import-resources.mjs"
+  },
+  "dependencies": {
+    "pocketbase": "^0.28.0"
+  }
+}

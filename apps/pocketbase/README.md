@@ -88,17 +88,68 @@ To create a site admin: open **Collections → users → New record**, check **i
 
 | Field | Type | Notes |
 |-------|------|--------|
-| title | text | required |
+| name | text | required |
 | summary | text | required |
-| body | editor | optional |
-| type | select | how-to, idea, presentation, printable, external-link, video |
-| settings | select (multi) | church, home, community |
-| topics | select (multi) | autism, chronic-illness, hearing, … |
-| audiences | select (multi) | ward-specialist, stake-specialist, leaders, families, caregivers |
-| file | file | optional upload (≤ 50MB) |
-| externalUrl | url | optional |
-| contributorCredit | text | optional |
+| author | text | optional contributor |
+| type | select | printable, presentation, talk, video |
+| link | url | file URL (R2/PocketBase) or external link (YouTube, Church site). **Do not upload video files** — paste a video URL instead. |
+| file | file | optional PocketBase-hosted upload (≤ 50MB); import script sets `link` from the file URL |
+| disabilities | relation (multi) | tags from `disabilities` collection |
+| audiences | relation (multi) | tags from `audiences` collection |
 | status | select | draft, published |
+| created | autodate | set automatically on create |
+| updated | autodate | set on create and every update |
+
+### `disabilities`
+
+| Field | Type | Notes |
+|-------|------|--------|
+| name | text | required |
+| description | text | required |
+| sortOrder | number | optional display order |
+
+Seeded by migration `1756401600_add_taxonomy_collections.js`.
+
+### `audiences`
+
+| Field | Type | Notes |
+|-------|------|--------|
+| name | text | required |
+| description | text | optional (e.g. age range) |
+| sortOrder | number | optional display order |
+
+Prepopulated: Primary, Youth, Young Adult, Young Single Adults, Parents, Leaders.
+
+## Importing resource files
+
+Bulk-import local files from the contributor folders:
+
+```bash
+# PocketBase must be running (npm run dev:pb)
+npm run import:resources
+```
+
+Defaults:
+
+- Source folder: `C:\Users\cjrja\Downloads\Disability Specialist Site Images\resources`
+- PocketBase: `http://127.0.0.1:8090` with local superuser credentials from `serve.bat`
+
+Override with env vars:
+
+```bash
+set RESOURCES_DIR=D:\path\to\resources
+set POCKETBASE_URL=http://127.0.0.1:8090
+npm run import:resources
+```
+
+The script:
+
+- Imports files from author subfolders (`jolynn_atkinson`, `melissa_mabey`, `pheobe_blackham`, etc.)
+- Skips `contribute_form/` (submission form — handled separately on the site)
+- Parses `links.md` for official Church URLs (deduped)
+- Uploads files to PocketBase storage and sets `link` to the file URL
+- Infers `type` from file extension/name; tags disabilities/audiences when keywords match
+- Skips records that already exist (matched by `name` + `author`)
 
 ### `faqs` / `pages`
 

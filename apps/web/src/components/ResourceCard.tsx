@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom'
-import {
-  RESOURCE_TYPE_LABELS,
-  SETTING_LABELS,
-  type Resource,
-} from '@cds/shared'
+import { RESOURCE_TYPE_LABELS, type Resource } from '@cds/shared'
+import { formatResourceDate } from '../lib/resourceLinks'
 
 type Props = {
   resource: Resource
@@ -14,16 +11,20 @@ export function ResourceCard({ resource }: Props) {
     <Link to={`/resources/${resource.id}`} className="resource-card">
       <div className="resource-card__meta">
         <span className="chip">{RESOURCE_TYPE_LABELS[resource.type]}</span>
-        {resource.settings.map((setting) => (
-          <span key={setting} className="chip chip--warm">
-            {SETTING_LABELS[setting]}
+        {resource.disabilities.slice(0, 2).map((disability) => (
+          <span key={disability.id} className="chip chip--warm">
+            {disability.name}
           </span>
         ))}
       </div>
-      <h3>{resource.title}</h3>
+      <h3>{resource.name}</h3>
       <p>{resource.summary}</p>
       <div className="resource-card__footer">
-        Updated {new Date(resource.updatedAt).toLocaleDateString()}
+        {formatResourceDate(resource.updatedAt) ? (
+          <>Updated {formatResourceDate(resource.updatedAt)}</>
+        ) : (
+          <span>{resource.author ?? 'Community resource'}</span>
+        )}
       </div>
     </Link>
   )
